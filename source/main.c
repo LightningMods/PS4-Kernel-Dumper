@@ -109,12 +109,12 @@ int _main(struct thread *td) {
 			row = 0;
 		} else row += 1;
 		
-		//sprintf(saveFile, "/mnt/usb%i/kernel_dump_fw_%03X.bin", row/10, fw_version);
+	
 		
 		//random name
  buffer = rand_string("test", 50);
-		
-		sf = open(buffer, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		sprintf(saveFile, "/mnt/usb%i/%s.bin", buffer);
+		sf = open(saveFile, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	}
 	printf_notification("\nUSB device detected.\n\nStarting kernel dumping to USB.");
 	int percent = 0;
