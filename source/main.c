@@ -113,7 +113,7 @@ int _main(struct thread *td) {
 		
 		//random name
  buffer = rand_string("test", 50);
-		sprintf(saveFile, "/mnt/usb%i/%s.bin", buffer);
+		sprintf(saveFile, "/mnt/usb0/%s.bin", buffer);
 		sf = open(saveFile, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	}
 	printf_notification("\nUSB device detected.\n\nStarting kernel dumping to USB.");
