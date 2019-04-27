@@ -99,7 +99,7 @@ int _main(struct thread *td) {
 	printfsocket("kernel base address is: 0x%016llx\n", kernel_base);
 #else
 	printf_notification("PS4 Kernel Dumper to USB");
-	char saveFile[64];
+	char saveFile[120];
 	int sf = -1;
 	int row = 0;
 	while (sf == -1) {
