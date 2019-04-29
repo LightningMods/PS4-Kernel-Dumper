@@ -16,21 +16,8 @@
 #include "kernel_utils.h"
 
 	
-char buffer;
-
-static char *rand_string(char *str, size_t size)
-{
-    const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJK...";
-    if (size) {
-        --size;
-        for (size_t n = 0; n < size; n++) {
-            int key = rand() % (int) (sizeof charset - 1);
-            str[n] = charset[key];
-        }
-        str[size] = '\0';
-    }
-    return str;
-}
+time_t rawtime;
+  char buffer [255];
 
 //#define DEBUG_SOCKET // comment to use USB method
 #define KERNEL_CHUNK_SIZE	0x1000
@@ -110,11 +97,24 @@ int _main(struct thread *td) {
 		} else row += 1;
 		
 	
-		
-		//random name
- buffer = rand_string("test", 50);
-		sprintf(saveFile, "/mnt/usb0/%s.bin", buffer);
-		sf = open(saveFile, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+        //time name
+ time (&rawtime);
+  sprintf(buffer,"/mnt/usb0/kernel_dump_%s.bin",ctime(&rawtime));
+char *p = buffer;
+for (; *p; ++p)
+{
+    if (*p == ' ')
+          *p = '_';
+}
+
+printf_notification(buffer);
+
+        sf = open(buffer, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+       if (sf < 0)
+{
+printf_notification("Failed to create\n");
+}
+    
 	}
 	printf_notification("\nUSB device detected.\n\nStarting kernel dumping to USB.");
 	int percent = 0;
